@@ -5,7 +5,7 @@ RSpec.describe 'Get one merchants', type: :request do
     it 'can return one merchant' do
       merchants = create_list(:merchant, 10)
 
-      get "/api/v1/merchants/merchants/#{merchants.first.id}"
+      get "/api/v1/merchants/#{merchants.first.id}"
 
       merchant = JSON.parse(response.body, symbolize_names: true)
 

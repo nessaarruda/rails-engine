@@ -5,7 +5,7 @@ RSpec.describe 'Get all merchants', type: :request do
     it 'can return all merchants 20 per page' do
       create_list(:merchant, 100)
 
-      get '/api/v1/merchants/merchants', params: { limit: 20 }
+      get '/api/v1/merchants', params: { limit: 20 }
 
       merchants = JSON.parse(response.body)
 
