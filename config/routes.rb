@@ -3,7 +3,11 @@ Rails.application.routes.draw do
 
   namespace 'api' do
     namespace :v1 do
-      resources :merchants
+
+      namespace :merchants do
+        get '/merchants', to: 'api/v1/merchants/merchants_controller#index'
+      end
+
     end
-  end 
+  end
 end
