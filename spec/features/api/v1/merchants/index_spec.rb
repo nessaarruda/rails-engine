@@ -2,13 +2,13 @@ require 'rails_helper'
 
 RSpec.describe 'Get all merchants', type: :request do
   describe 'happy path' do
-    let!(:merchants) { FactoryBot.create_list(:random_merchant, 100)}
-    before {get '/api/v1/merchants/find_all'}
     it 'can return all merchants' do
-      expect(JSON.parse(response.body).size).to eq(100)
-    end
-    it 'returns status code 200' do
+      create_list(:merchant, 10)
+
+      get '/api/v1/merchants/merchants'
+
       expect(response).to have_http_status(:success)
+      expect(Merchant.all.count).to eq(10)
     end
   end
 end

@@ -1,9 +1,5 @@
 FactoryBot.define do
 
-  factory :random_merchant, class: Merchant do
-    name {Faker::Superhero.name}
-  end
-
   factory :customer do
     first_name {Faker::Name.first_name}
     last_name {Faker::Dessert.variety}
