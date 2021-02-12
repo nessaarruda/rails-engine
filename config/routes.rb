@@ -8,6 +8,7 @@ Rails.application.routes.draw do
         get '/find_all', to: 'find#index'
         get '/merchants', to: 'merchants#index'
         get '/merchants/:id', to: 'merchants#show'
+        get '/merchants/:id/items', to: 'items#index'
       end
 
     end
