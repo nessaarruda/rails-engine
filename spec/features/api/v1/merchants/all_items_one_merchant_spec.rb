@@ -5,7 +5,7 @@ RSpec.describe 'Get all items for one merchants', type: :request do
     it 'can return items for one merchant based on id' do
       merchant = create(:merchant)
 
-      get "/api/v1/merchants/merchants/#{merchant.id}/items"
+      get "/api/v1/merchants/#{merchant.id}/items"
 
       expect(response).to have_http_status(:success)
 
