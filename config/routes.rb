@@ -10,6 +10,12 @@ Rails.application.routes.draw do
         get '/:id/items', to: 'items#index'
       end
 
+      namespace :items do
+        get '/', to: 'items#index'
+        get '/:id', to: 'items#show'
+        get '/:id/merchants', to: 'merchants#show'
+      end
+
     end
   end
 end
