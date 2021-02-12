@@ -54,7 +54,6 @@ GEM
       popper_js (>= 1.14.3, < 2)
       sassc-rails (>= 2.0.0)
     builder (3.2.4)
-    byebug (11.1.3)
     capybara (3.35.3)
       addressable
       mini_mime (>= 0.1.3)
@@ -213,7 +212,6 @@ GEM
     tilt (2.0.10)
     tzinfo (1.2.9)
       thread_safe (~> 0.1)
-    vcr (6.0.0)
     websocket-driver (0.7.3)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -226,7 +224,6 @@ PLATFORMS
 DEPENDENCIES
   bootsnap (>= 1.1.0)
   bootstrap (~> 4.6)
-  byebug
   capybara
   factory_bot_rails
   faker
@@ -245,7 +242,6 @@ DEPENDENCIES
   shoulda-matchers
   simplecov
   tzinfo-data
-  vcr
 
 RUBY VERSION
    ruby 2.5.3p105
