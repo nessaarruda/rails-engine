@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe 'Get all merchants', type: :request do
+RSpec.describe 'Get one merchants', type: :request do
   describe 'happy path' do
-    it 'can search and return one merchant' do
+    it 'can return one merchant' do
       merchants = create_list(:merchant, 10)
 
       get "/api/v1/merchants/merchants/#{merchants.first.id}"
