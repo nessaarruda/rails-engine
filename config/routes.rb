@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     namespace :v1 do
 
       namespace :merchants do
-        get '/merchants', to: 'api/v1/merchants/merchants_controller#index'
+        get '/find_all', to: 'find#index'
       end
 
     end
