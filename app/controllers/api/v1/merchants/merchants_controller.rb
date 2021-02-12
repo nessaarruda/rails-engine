@@ -1,7 +1,8 @@
 class Api::V1::Merchants::MerchantsController < ApplicationController
 
   def index
-    render json: MerchantSerializer.new(Merchant.all)
+    merchants = Merchant.limit(params[:limit])
+    render json: MerchantSerializer.new(merchants)
   end
 
   def show
