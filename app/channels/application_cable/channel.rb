@@ -1,4 +1,3 @@
-module ApplicationCable
-  class Channel < ActionCable::Channel::Base
-  end
-end
+# RSpec.configure do |config|
+#   config.include FactoryBot::Syntax::Methods
+# end
