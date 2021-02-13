@@ -2,15 +2,32 @@ require 'rails_helper'
 
 RSpec.describe 'Get all merchants', type: :request do
   describe 'happy path' do
-    it 'can return all merchants 20 per page' do
-      create_list(:merchant, 100)
+    it 'can return all merchants' do
+      create_list(:merchant, 3)
 
-      get '/api/v1/merchants', params: { limit: 20 }
+      get '/api/v1/merchants'
 
-      merchants = JSON.parse(response.body)
+      expect(response).to be_successful
 
-      expect(response).to have_http_status(:success)
-      expect(merchants['data'].count).to eq(20)
+      parsed = JSON.parse(response.body, symbolize_names: true)
+
+      expect(parsed[:data].count).to eq(3)
+
+      parsed[:data].each do |merchant|
+        expect(merchant).to be_a(Hash)
+
+        expect(merchant).to have_key(:id)
+        expect(merchant).to be_a(Hash)
+
+        expect(merchant).to have_key(:type)
+        expect(merchant[:type]).to be_a(String)
+
+        expect(merchant).to have_key(:attributes)
+        expect(merchant[:attributes]).to be_a(Hash)
+
+        expect(merchant[:attributes]).to have_key(:name)
+        expect(merchant[:attributes][:name]).to be_a(String)
+      end
     end
   end
 end
