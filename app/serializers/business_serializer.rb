@@ -1,8 +1,14 @@
 class BusinessSerializer
   include FastJsonapi::ObjectSerializer
-  set_id :object_id
 
-  attributes :revenue do |object|
-    object
+  def self.merchants
+    merchants.map do |merchant|
+      {
+        id: merchant.id,
+        type: merchant.type,
+        attributes: merchant.attributes,
+        name: merchant.name
+      }
+    end 
   end
 end

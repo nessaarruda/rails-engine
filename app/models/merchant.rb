@@ -14,6 +14,5 @@ class Merchant < ApplicationRecord
     .group('merchants.id')
     .order('total_revenue DESC')
     .limit(limit)
-    require "pry"; binding.pry
   end
 end

@@ -9,7 +9,7 @@ RSpec.describe 'Business logic', type: :request do
     transaction = create(:transaction, invoice_id: invoice.id, result: 'success')
   end
   describe 'Happy path' do
-    it 'find a quantity of merchants sorted by descending revenue' do
+    xit 'find a quantity of merchants sorted by descending revenue' do
       get '/api/v1/merchants/most_revenue?quantity=5'
 
       expect(response).to have_http_status(:success)
