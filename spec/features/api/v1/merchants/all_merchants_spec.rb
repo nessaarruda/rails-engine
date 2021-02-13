@@ -29,5 +29,16 @@ RSpec.describe 'Get all merchants', type: :request do
         expect(merchant[:attributes][:name]).to be_a(String)
       end
     end
+    it 'return 20 merchants per page' do
+      create_list(:merchant, 100)
+
+      get '/api/v1/merchants', params: { limit: 20}
+
+      expect(response).to be_successful
+
+      parsed = JSON.parse(response.body, symbolize_names: true)
+
+      expect(parsed[:data].count).to eq(20)
+    end
   end
 end
