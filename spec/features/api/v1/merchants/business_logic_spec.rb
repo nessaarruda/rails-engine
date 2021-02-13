@@ -15,7 +15,7 @@ RSpec.describe 'Business logic', type: :request do
       expect(response).to have_http_status(:success)
 
       result = JSON.parse(response.body, symbolize_names: true)
-      require "pry"; binding.pry
+
       expect(result).to have_key(:data)
       expect(result[:data]).to be_an(Array)
 
