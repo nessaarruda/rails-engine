@@ -6,16 +6,21 @@ Rails.application.routes.draw do
 
       namespace :merchants do
         get '/', to: 'merchants#index'
+        get '/most_revenue', to: 'business#most_revenue'
         get '/:id', to: 'merchants#show'
         get '/:id/items', to: 'items#index'
       end
 
       namespace :items do
         get '/', to: 'items#index'
+        post '/', to: 'items#create'
         get '/:id', to: 'items#show'
+        delete '/:id', to: 'items#destroy'
+        patch '/:id', to: 'items#update'
         get '/:id/merchants', to: 'merchants#show'
       end
 
+      resources :merchants, only: :index
     end
   end
 end
