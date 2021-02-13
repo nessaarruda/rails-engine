@@ -1,7 +1,7 @@
 class Api::V1::Items::ItemsController < ApplicationController
 
   def index
-    items = Item.limit(params[:limit])
+    items = Item.all
     render json: ItemSerializer.new(items)
   end
 
