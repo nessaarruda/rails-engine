@@ -34,5 +34,16 @@ RSpec.describe 'Get all items', type: :request do
        expect(item[:attributes][:merchant_id]).to be_an(Integer)
      end
     end
+    it 'return 20 items per page' do
+      create_list(:item, 100)
+
+      get '/api/v1/items', params: { limit: 20}
+
+      expect(response).to be_successful
+
+      parsed = JSON.parse(response.body, symbolize_names: true)
+
+      expect(parsed[:data].count).to eq(20)
+    end
   end
 end
