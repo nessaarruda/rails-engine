@@ -138,11 +138,12 @@ GET /api/v1/revenue?start=<start_date>&end=<end_date>
 GET /api/v1/merchants/:id/revenue
 ```
 
+```
 ## Next Steps:
 
 - Add sad path tests
 
-#### Author
+## Author
 
 - V Arruda | [github](https://github.com/nessarruda) | [linkedin](https://www.linkedin.com/in/vanessa-alves-de-arruda/)
 
