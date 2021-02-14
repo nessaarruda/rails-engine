@@ -136,7 +136,7 @@ GET /api/v1/merchants/:id/revenue
 
 ## Database Schema
 
-![DB Schema]("https://github.com/nessaarruda/rails-engine/blob/readme/app/images/Screen%20Shot%202021-02-14%20at%202.10.06%20PM.png" width="700")
+![DB Schema](https://github.com/nessaarruda/rails-engine/blob/readme/app/images/Screen%20Shot%202021-02-14%20at%202.10.06%20PM.png" width="700)
 
 ## Next Steps:
 
