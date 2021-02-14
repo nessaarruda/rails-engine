@@ -142,9 +142,9 @@ GET /api/v1/merchants/:id/revenue
 
 - Add sad path tests
 
-### Author
+#### Author
 
-V Arruda | [github](https://github.com/nessarruda) | [linkedin](https://www.linkedin.com/in/vanessa-alves-de-arruda/)
+- V Arruda | [github](https://github.com/nessarruda) | [linkedin](https://www.linkedin.com/in/vanessa-alves-de-arruda/)
 
 
 
