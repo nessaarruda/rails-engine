@@ -135,7 +135,7 @@ GET /api/v1/merchants/:id/revenue
 ```
 
 ## Database Schema
-<img src="https://user-images.githubusercontent.com/34531014/96935920-550ab080-1482-11eb-8abe-5323ebe0e408.png" width="700">
+<img src="https://github.com/nessaarruda/rails-engine/blob/readme/app/images/Screen%20Shot%202021-02-14%20at%202.10.06%20PM.png" width="700">
 
 ## Next Steps:
 
