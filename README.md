@@ -40,6 +40,10 @@ This is only an API, with no frontend view.
 ## Testing
 - Run with $ bundle exec rspec. All tests should be passing.
 
+
+## Database Schema
+![Watch Party](https://github.com/nessaarruda/rails-engine/blob/main/app/images/Screen%20Shot%202021-02-14%20at%202.10.06%20PM.png)
+
 ## API Endpoints
 - All requests sent to `http://localhost:3000/api/v1`
 
@@ -133,9 +137,6 @@ GET /api/v1/revenue?start=<start_date>&end=<end_date>
 ```
 GET /api/v1/merchants/:id/revenue
 ```
-
-## Database Schema
-![Watch Party](https://github.com/nessaarruda/viewing_party/blob/readme/app/assets/images/readmeimage.jpeg)
 
 ## Next Steps:
 
