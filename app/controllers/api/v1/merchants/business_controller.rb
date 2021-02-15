@@ -9,4 +9,9 @@ class Api::V1::Merchants::BusinessController < ApplicationController
     merchant = Merchant.find(params[:id]).total_revenue
     render json: BusinessSerializer.new(merchant)
   end
+
+  def revenue_date_range
+    merchants = Merchant.date_revenue(params[:start], params[:end])
+    render json: BusinessSerializer.new(merchants)
+  end
 end
