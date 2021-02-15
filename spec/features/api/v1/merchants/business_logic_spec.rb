@@ -99,6 +99,22 @@ RSpec.describe 'Business logic', type: :request do
       expect(result[:data][:attributes]).to have_key(:revenue)
       expect(result[:data][:attributes][:revenue]).to be_a(Float)
     end
+    it 'returns total revenue for a given merchant' do
+      get "/api/v1/merchants/#{@merchant_1.id}/revenue"
+
+      expect(response).to be_successful
+
+      result = JSON.parse(response.body, symbolize_names: true)
+
+      expect(result).to have_key(:data)
+      expect(result[:data]).to be_a(Hash)
+
+      expect(result[:data]).to have_key(:attributes)
+      expect(result[:data][:attributes]).to be_a(Hash)
+
+      expect(result[:data][:attributes]).to have_key(:revenue)
+      expect(result[:data][:attributes][:revenue]).to be_a(Float)
+    end
     it 'returns a quantity of merchants sorted by descending item quantity sold' do
       get "/api/v1/merchants/items_sold?quantity=5"
 
