@@ -9,23 +9,23 @@ class Merchant < ApplicationRecord
 
   def self.top_revenue(limit)
     joins(invoices: [:invoice_items, :transactions])
-    .where('result = ?', 'success')
+    .where(transactions: {result: 'success'}, invoices: {status: 'shipped'})
     .select('merchants.*, sum(invoice_items.quantity * invoice_items.unit_price) AS total_revenue')
     .group(:id)
     .order('total_revenue DESC')
     .limit(limit)
   end
 
-  def total_revenue
+  def revenue
     invoices.joins(:invoice_items, :transactions)
     .where(transactions: {result: 'success'}, invoices: {status: 'shipped', merchant_id: self.id})
     .sum("invoice_items.unit_price * invoice_items.quantity")
   end
 
-  def self.items_sold(limit)
+  def self.items(limit)
     joins(invoices: [:invoice_items, :transactions])
-    .select("merchants.id, merchants.name, sum(invoice_items.quantity) AS items_sold")
     .where(transactions: {result: 'success'}, invoices: {status: 'shipped'})
+    .select("merchants.id, merchants.name, sum(invoice_items.quantity) AS items_sold")
     .group('merchants.id')
     .order("items_sold DESC")
     .limit(limit)
