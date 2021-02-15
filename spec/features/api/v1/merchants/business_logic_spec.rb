@@ -92,5 +92,33 @@ RSpec.describe 'Business logic', type: :request do
       expect(result[:data][:attributes]).to have_key(:revenue)
       expect(result[:data][:attributes][:revenue]).to be_a(Float)
     end
+    it 'returns a quantity of merchants sorted by descending item quantity sold' do
+      get "/api/v1/merchants/items_sold?quantity=5"
+
+      expect(response).to be_successful
+
+      items = JSON.parse(response.body)
+
+      expect(items[:data].count).to eq(5)
+      expect(items[:data][0][:id]).to eq(item_1.id.to_s)
+      expect(items[:data][0][:attributes][:name]).to eq(item_1.name)
+      expect(items[:data][0][:attributes][:description]).to eq(item_1.description)
+      expect(items[:data][0][:attributes][:unit_price]).to eq(item_1.unit_price)
+
+      expect(items[:data][1][:id]).to eq(item_2.id.to_s)
+      expect(items[:data][1][:attributes][:name]).to eq(item_2.name)
+      expect(items[:data][1][:attributes][:description]).to eq(item_2.description)
+      expect(items[:data][1][:attributes][:unit_price]).to eq(item_2.unit_price)
+
+      expect(items[:data][2][:id]).to eq(item_3.id.to_s)
+      expect(items[:data][2][:attributes][:name]).to eq(item_3.name)
+      expect(items[:data][2][:attributes][:description]).to eq(item_3.description)
+      expect(items[:data][2][:attributes][:unit_price]).to eq(item_3.unit_price)
+
+      expect(items[:data][3][:id]).to eq(item_4.id.to_s)
+      expect(items[:data][3][:attributes][:name]).to eq(item_4.name)
+      expect(items[:data][3][:attributes][:description]).to eq(item_4.description)
+      expect(items[:data][3][:attributes][:unit_price]).to eq(item_4.unit_price)
+    end
   end
 end
