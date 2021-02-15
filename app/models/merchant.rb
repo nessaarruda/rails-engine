@@ -1,7 +1,7 @@
 class Merchant < ApplicationRecord
   has_many :invoices, dependent: :destroy
   has_many :items, dependent: :destroy
-  has_many :transactions, dependent: :destroy
+  has_many :transactions, through: :invoices
   has_many :customers, through: :invoices
   has_many :invoice_items, through: :items
 
@@ -9,9 +9,9 @@ class Merchant < ApplicationRecord
 
   def self.top_revenue(limit)
     joins(invoices: [:invoice_items, :transactions])
-    .select('merchants.*, merchants.name, SUM(invoice_items.quantity * invoice_items.unit_price) AS total_revenue')
-    .where(transactions: {result: 'success'}, invoices: {status: 'shipped'})
-    .group('merchants.id')
+    .where('result = ?', 'success')
+    .select('merchants.*, sum(invoice_items.quantity * invoice_items.unit_price) AS total_revenue')
+    .group(:id)
     .order('total_revenue DESC')
     .limit(limit)
   end
