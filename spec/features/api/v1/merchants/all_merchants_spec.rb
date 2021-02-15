@@ -14,7 +14,6 @@ RSpec.describe 'Get all merchants', type: :request do
       expect(parsed[:data].count).to eq(3)
 
       parsed[:data].each do |merchant|
-        expect(merchant).to be_a(Hash)
 
         expect(merchant).to have_key(:id)
         expect(merchant).to be_a(Hash)
