@@ -72,9 +72,25 @@ RSpec.describe 'Business logic', type: :request do
 
       expect(result[:data][0]).to have_key(:attributes)
       expect(result[:data][0]).to be_a(Hash)
-      
+
       expect(result[:data][0][:attributes][:revenue]).to have_key(:name)
       expect(result[:data][0][:attributes][:revenue][:name]).to be_a(String)
+    end
+    it 'returns total revenue for a given merchant' do
+      get "/api/v1/merchants/#{@merchant_1.id}/revenue"
+
+      expect(response).to be_successful
+
+      result = JSON.parse(response.body, symbolize_names: true)
+
+      expect(result).to have_key(:data)
+      expect(result[:data]).to be_a(Hash)
+
+      expect(result[:data]).to have_key(:attributes)
+      expect(result[:data][:attributes]).to be_a(Hash)
+
+      expect(result[:data][:attributes]).to have_key(:revenue)
+      expect(result[:data][:attributes][:revenue]).to be_a(Float)
     end
   end
 end
