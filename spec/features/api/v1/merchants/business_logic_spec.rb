@@ -87,17 +87,17 @@ RSpec.describe 'Business logic', type: :request do
       get '/api/v1/merchants/revenue?start=2021-01-01&end=2021-03-01'
 
       expect(response).to be_successful
-      
+
       result = JSON.parse(response.body, symbolize_names: true)
 
-      expect(resp).to have_key(:data)
-      expect(resp[:data]).to be_a(Hash)
+      expect(result).to have_key(:data)
+      expect(result[:data]).to be_a(Hash)
 
-      expect(resp[:data]).to have_key(:attributes)
-      expect(resp[:data][:attributes]).to be_a(Hash)
+      expect(result[:data]).to have_key(:attributes)
+      expect(result[:data][:attributes]).to be_a(Hash)
 
-      expect(resp[:data][:attributes]).to have_key(:revenue)
-      expect(resp[:data][:attributes][:revenue]).to be_a(Float)
+      expect(result[:data][:attributes]).to have_key(:revenue)
+      expect(result[:data][:attributes][:revenue]).to be_a(Float)
     end
     it 'returns a quantity of merchants sorted by descending item quantity sold' do
       get "/api/v1/merchants/items_sold?quantity=5"

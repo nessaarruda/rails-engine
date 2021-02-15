@@ -13,7 +13,8 @@ class Api::V1::Merchants::BusinessController < ApplicationController
   def items_sold
     merchants = Merchant.items(params[:quantity])
     render json: MerchantSerializer.new(merchants)
-    
+  end 
+
   def revenue_date_range
     merchants = Merchant.date_revenue(params[:start], params[:end])
     render json: BusinessSerializer.new(merchants)
