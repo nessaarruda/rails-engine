@@ -20,15 +20,16 @@ RSpec.describe 'Business logic', type: :request do
       @item_9  = create(:item, merchant: @merchant_5)
       @item_10  = create(:item, merchant: @merchant_6)
 
-      @invoice_1  = create(:invoice, merchant: @merchant_1)
-      @invoice_2  = create(:invoice, merchant: @merchant_1)
-      @invoice_3  = create(:invoice, merchant: @merchant_2)
-      @invoice_4  = create(:invoice, merchant: @merchant_2)
-      @invoice_5  = create(:invoice, merchant: @merchant_2)
-      @invoice_6  = create(:invoice, merchant: @merchant_3)
-      @invoice_7  = create(:invoice, merchant: @merchant_3)
-      @invoice_8  = create(:invoice, merchant: @merchant_4)
-      @invoice_9  = create(:invoice, merchant: @merchant_5)
+      @invoice_1  = create(:invoice, merchant: @merchant_1, status: 'shipped')
+      @invoice_2  = create(:invoice, merchant: @merchant_1, status: 'shipped')
+      @invoice_3  = create(:invoice, merchant: @merchant_2, status: 'shipped')
+      @invoice_4  = create(:invoice, merchant: @merchant_2, status: 'shipped')
+      @invoice_5  = create(:invoice, merchant: @merchant_2, status: 'shipped')
+      @invoice_6  = create(:invoice, merchant: @merchant_3, status: 'shipped')
+      @invoice_7  = create(:invoice, merchant: @merchant_3, status: 'shipped')
+      @invoice_8  = create(:invoice, merchant: @merchant_4, status: 'shipped')
+      @invoice_9  = create(:invoice, merchant: @merchant_5, status: 'shipped')
+
       create(:invoice_item, invoice: @invoice_1, item: @item_1, quantity: 10)
       create(:invoice_item, invoice: @invoice_1, item: @item_2, quantity: 10)
       create(:invoice_item, invoice: @invoice_2, item: @item_1, quantity: 10)
@@ -86,8 +87,8 @@ RSpec.describe 'Business logic', type: :request do
       get '/api/v1/merchants/revenue?start=2021-01-01&end=2021-03-01'
 
       expect(response).to be_successful
-
-      resp = JSON.parse(response.body, symbolize_names: true)
+      
+      result = JSON.parse(response.body, symbolize_names: true)
 
       expect(resp).to have_key(:data)
       expect(resp[:data]).to be_a(Hash)
@@ -97,6 +98,22 @@ RSpec.describe 'Business logic', type: :request do
 
       expect(resp[:data][:attributes]).to have_key(:revenue)
       expect(resp[:data][:attributes][:revenue]).to be_a(Float)
+    end
+    it 'returns a quantity of merchants sorted by descending item quantity sold' do
+      get "/api/v1/merchants/items_sold?quantity=5"
+
+      expect(response).to be_successful
+
+      parsed = JSON.parse(response.body, symbolize_names: true)
+
+      expect(parsed).to have_key(:data)
+      expect(parsed[:data][0]).to be_a(Hash)
+
+      expect(parsed[:data][0]).to have_key(:attributes)
+      expect(parsed[:data][0][:attributes]).to be_a(Hash)
+
+      expect(parsed[:data][0][:attributes]).to have_key(:name)
+      expect(parsed[:data][0][:attributes][:name]).to be_a(String)
     end
   end
 end
