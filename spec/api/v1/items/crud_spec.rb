@@ -7,8 +7,8 @@ RSpec.describe 'Get one merchants', type: :request do
 
       expect(response).to be_successful
 
-      items = JSON.parse(response.body, symbolize_names: true)
-      expect(items).to eq({:data=>[]})
+      parsed = JSON.parse(response.body, symbolize_names: true)
+      expect(parsed).to eq({ data: [] })
     end
     it 'returns one item based on id' do
       merchant = create(:merchant)
@@ -39,16 +39,16 @@ RSpec.describe 'Get one merchants', type: :request do
     end
     it 'can create a new item if all attributes have a value' do
       merchant = create(:merchant)
-      item_params = ({
+      item_params = {
         name: 'Jumping Rope',
         description: 'It is a rope and you can use for jumping',
         unit_price: 14.99,
         merchant_id: merchant.id
-      })
+      }
 
-      headers = {"CONTENT_TYPE" => "application/json"}
+      headers = { 'CONTENT_TYPE' => 'application/json' }
 
-      post "/api/v1/items", headers: headers, params: JSON.generate(item_params)
+      post '/api/v1/items', headers: headers, params: JSON.generate(item_params)
 
       expect(response).to be_successful
       expect(Item.last.name).to eq(item_params[:name])
@@ -62,7 +62,7 @@ RSpec.describe 'Get one merchants', type: :request do
       original_name = Item.last.name
       item_params = { name: "Hey, I'm new here" }
 
-      headers = {"CONTENT_TYPE" => "application/json"}
+      headers = { 'CONTENT_TYPE' => 'application/json' }
 
       patch "/api/v1/items/#{item.id}", headers: headers, params: JSON.generate(item_params)
 
@@ -82,7 +82,7 @@ RSpec.describe 'Get one merchants', type: :request do
 
       expect(response).to be_successful
       expect(Item.count).to eq(0)
-      expect{Item.find(item.id)}.to raise_error(ActiveRecord::RecordNotFound)
+      expect { Item.find(item.id) }.to raise_error(ActiveRecord::RecordNotFound)
     end
     it 'can return merchant details for one item' do
       merchant = create(:merchant)

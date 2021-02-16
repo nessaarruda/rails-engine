@@ -8,6 +8,6 @@ class Item < ApplicationRecord
   validates :unit_price, presence: true
 
   def self.find_all_items(attribute, value)
-     Item.where("LOWER(#{attribute}) LIKE LOWER('%#{value}%')")
+    Item.where("LOWER(#{attribute}) LIKE LOWER('%#{value}%')")
   end
 end

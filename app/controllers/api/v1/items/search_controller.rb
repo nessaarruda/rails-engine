@@ -1,5 +1,4 @@
 class Api::V1::Items::SearchController < ApplicationController
-
   def find_items
     render json: ItemSerializer.new(Item.find_all_items(attribute, value))
   end
