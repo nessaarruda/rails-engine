@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'Items search' do
-  describe 'find all items based on search criteria' do
+  describe 'find all items based on search criteria name' do
     it 'search is case insensitive' do
       item_1 = create(:item, name: 'Jumping Rope')
       item_2 = create(:item, name: 'Normaly Rope')
@@ -9,6 +9,7 @@ describe 'Items search' do
       get '/api/v1/items/find_all?name=rope'
 
       expect(response).to be_successful
+
       result = JSON.parse(response.body, symbolize_names: true)
 
       expect(result).to have_key(:data)
@@ -23,4 +24,4 @@ describe 'Items search' do
       end
     end
   end
-end 
+end

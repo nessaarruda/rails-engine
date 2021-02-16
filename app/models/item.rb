@@ -6,4 +6,8 @@ class Item < ApplicationRecord
   validates :name, presence: true
   validates :description, presence: true
   validates :unit_price, presence: true
+
+  def self.find_all_items(attribute, value)
+     Item.where("LOWER(#{attribute}) LIKE LOWER('%#{value}%')")
+  end
 end
