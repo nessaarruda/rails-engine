@@ -3,9 +3,9 @@ require 'rails_helper'
 describe 'Merchants search' do
   describe 'find one MERCHANT based on search criteria' do
     it 'matches are case insensitive' do
-      merchant = create(:merchant, name: 'The Brand Label')
+      merchant = create(:merchant, name: 'V place')
 
-      get '/api/v1/merchants/find?name=brand'
+      get "/api/v1/merchants/find?name=v"
 
       expect(response).to be_successful
       result = JSON.parse(response.body, symbolize_names: true)
