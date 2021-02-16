@@ -14,7 +14,6 @@ RSpec.describe 'Get all merchants', type: :request do
       expect(parsed[:data].count).to eq(3)
 
       parsed[:data].each do |merchant|
-
         expect(merchant).to have_key(:id)
         expect(merchant).to be_a(Hash)
 
@@ -31,7 +30,7 @@ RSpec.describe 'Get all merchants', type: :request do
     it 'return 20 merchants per page' do
       create_list(:merchant, 100)
 
-      get '/api/v1/merchants', params: { limit: 20}
+      get '/api/v1/merchants', params: { limit: 20 }
 
       expect(response).to be_successful
 

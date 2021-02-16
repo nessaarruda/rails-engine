@@ -8,6 +8,7 @@ Rails.application.routes.draw do
         get '/', to: 'merchants#index'
         get '/revenue', to: 'business#revenue_date_range'
         get '/most_revenue', to: 'business#most_revenue'
+        get '/find', to: 'search#find_merchant'
         get '/items_sold', to: 'business#items_sold'
         get '/:id', to: 'merchants#show'
         get '/:id/revenue', to: 'business#total_revenue'
@@ -15,6 +16,7 @@ Rails.application.routes.draw do
       end
 
       namespace :items do
+        get '/find_all', to: 'search#find_items'
         get '/', to: 'items#index'
         post '/', to: 'items#create'
         get '/:id', to: 'items#show'
