@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'Merchants search' do
   describe 'find one MERCHANT based on search criteria' do
-    it 'matches are case insensitive' do
+    it 'search is case insensitive' do
       merchant = create(:merchant, name: 'V place')
 
       get "/api/v1/merchants/find?name=v"
