@@ -29,21 +29,58 @@ RSpec.describe 'Get all items', type: :request do
 
         expect(item[:attributes]).to have_key(:unit_price)
         expect(item[:attributes][:unit_price]).to be_a(Float)
-
-        expect(item[:attributes]).to have_key(:merchant_id)
-        expect(item[:attributes][:merchant_id]).to be_an(Integer)
       end
     end
-    it 'returns 20 items per page' do
+    it 'return 20 items per page' do
       create_list(:item, 100)
 
-      get '/api/v1/items', params: { limit: 20 }
+      get '/api/v1/items?per_page=20&page=1'
 
       expect(response).to be_successful
 
       parsed = JSON.parse(response.body, symbolize_names: true)
 
       expect(parsed[:data].count).to eq(20)
+      require "pry"; binding.pry
+      expect(items[:data].pluck(:id).map(&:to_i)).to match_array(Item.first(20).pluck(:id)) # first 20 results match first 20 db
+    end
+    it 'returns array of data even if only one result is found' do
+      # always return an array of data, even if one or zero resources are found
+      create(:item)
+
+      get '/api/v1/items'
+
+      expect(response).to be_successful
+
+      items = JSON.parse(response.body, symbolize_names: true)
+
+      expect(items[:data]).to be_an(Array)
+      expect(items[:data].count).to eq(1)
+    end
+    it 'returns array of data even if no result are found' do
+
+      get '/api/v1/items'
+
+      expect(response).to be_successful
+
+      items = JSON.parse(response.body, symbolize_names: true)
+
+      expect(items[:data]).to be_an(Array)
+      expect(items[:data].count).to eq(0)
+    end
+    it 'response doesnt include dependent data of the resource' do
+      # NOT include dependent data of the resource (eg, if you’re
+      # fetching items, do not send any data about item’s items or invoices)
+      create_list(:item, 3)
+
+      get '/api/v1/items'
+
+      expect(response).to be_successful
+
+      items = JSON.parse(response.body, symbolize_names: true)
+
+      expect(items[:data]).to be_an(Array)
+      expect(items[:data].include?(Item.all.first.merchant)).to eq(false)
     end
   end
 end

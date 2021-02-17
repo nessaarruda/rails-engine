@@ -33,9 +33,6 @@ RSpec.describe 'Get one merchants', type: :request do
 
       expect(item[:data][:attributes]).to have_key(:unit_price)
       expect(item[:data][:attributes][:unit_price]).to be_a(Float)
-
-      expect(item[:data][:attributes]).to have_key(:merchant_id)
-      expect(item[:data][:attributes][:merchant_id]).to be_an(Integer)
     end
     it 'can create a new item if all attributes have a value' do
       merchant = create(:merchant)

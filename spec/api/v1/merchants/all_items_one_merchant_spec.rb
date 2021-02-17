@@ -11,13 +11,17 @@ RSpec.describe 'Get all items for one merchants', type: :request do
       get "/api/v1/merchants/#{merchant1.id}/items"
 
       expect(response).to be_successful
-      items = JSON.parse(response.body, symbolize_names: true)
 
-      expect(items[:data][0][:attributes][:merchant_id]).to eq(merchant1.id)
-      expect(items[:data][1][:attributes][:merchant_id]).to eq(merchant1.id)
-      expect(items[:data][2][:attributes][:merchant_id]).to eq(merchant1.id)
-      expect(items[:data][3][:attributes][:merchant_id]).to eq(merchant1.id)
-      expect(items[:data][4][:attributes][:merchant_id]).to eq(merchant1.id)
+      parsed = JSON.parse(response.body, symbolize_names: true)
+
+      expect(parsed[:data]).to be_an(Array)
+      expect(parsed[:data][0]).to be_a(Hash)
+      expect(parsed[:data][0]).to have_key(:attributes)
+      expect(parsed[:data][0][:attributes]).to be_a(Hash)
+      expect(parsed[:data][0][:attributes]).to have_key(:name)
+      expect(parsed[:data][0][:attributes]).to have_key(:description)
+      expect(parsed[:data][0][:attributes]).to have_key(:unit_price)
+      expect(parsed[:data][0][:attributes][:unit_price]).to be_a(Float)
       expect(items2.first.id).to_not eq(merchant1.id)
     end
   end
