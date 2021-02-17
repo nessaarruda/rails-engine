@@ -30,13 +30,51 @@ RSpec.describe 'Get all merchants', type: :request do
     it 'return 20 merchants per page' do
       create_list(:merchant, 100)
 
-      get '/api/v1/merchants', params: { limit: 20 }
+      get '/api/v1/merchants?per_page=20&page=1'
 
       expect(response).to be_successful
 
       parsed = JSON.parse(response.body, symbolize_names: true)
 
       expect(parsed[:data].count).to eq(20)
+    end
+    it 'returns array of data even if only one result is found' do
+      # always return an array of data, even if one or zero resources are found
+      create(:merchant)
+
+      get '/api/v1/merchants'
+
+      expect(response).to be_successful
+
+      merchants = JSON.parse(response.body, symbolize_names: true)
+
+      expect(merchants[:data]).to be_an(Array)
+      expect(merchants[:data].count).to eq(1)
+    end
+    it 'returns array of data even if no result are found' do
+
+      get '/api/v1/merchants'
+
+      expect(response).to be_successful
+
+      merchants = JSON.parse(response.body, symbolize_names: true)
+
+      expect(merchants[:data]).to be_an(Array)
+      expect(merchants[:data].count).to eq(0)
+    end
+    it 'response doesnt include dependent data of the resource' do
+      # NOT include dependent data of the resource (eg, if you’re
+      # fetching merchants, do not send any data about merchant’s items or invoices)
+      create_list(:merchant, 3)
+
+      get '/api/v1/merchants'
+
+      expect(response).to be_successful
+
+      merchants = JSON.parse(response.body, symbolize_names: true)
+
+      expect(merchants[:data]).to be_an(Array)
+      expect(merchants[:data].include?(Merchant.all.first.items)).to eq(false)
     end
   end
 end
