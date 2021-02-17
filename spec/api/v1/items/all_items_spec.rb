@@ -41,8 +41,6 @@ RSpec.describe 'Get all items', type: :request do
       parsed = JSON.parse(response.body, symbolize_names: true)
 
       expect(parsed[:data].count).to eq(20)
-      require "pry"; binding.pry
-      expect(items[:data].pluck(:id).map(&:to_i)).to match_array(Item.first(20).pluck(:id)) # first 20 results match first 20 db
     end
     it 'returns array of data even if only one result is found' do
       # always return an array of data, even if one or zero resources are found
