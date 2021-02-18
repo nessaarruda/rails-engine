@@ -40,6 +40,8 @@ RSpec.describe 'Get all items', type: :request do
 
       parsed = JSON.parse(response.body, symbolize_names: true)
 
+      expect(parsed).to be_a(Hash)
+      expect(parsed[:data]).to be_an(Array)
       expect(parsed[:data].count).to eq(20)
     end
     it 'returns array of data even if only one result is found' do
@@ -50,10 +52,10 @@ RSpec.describe 'Get all items', type: :request do
 
       expect(response).to be_successful
 
-      items = JSON.parse(response.body, symbolize_names: true)
+      parsed = JSON.parse(response.body, symbolize_names: true)
 
-      expect(items[:data]).to be_an(Array)
-      expect(items[:data].count).to eq(1)
+      expect(parsed[:data]).to be_an(Array)
+      expect(parsed[:data].count).to eq(1)
     end
     it 'returns array of data even if no result are found' do
 
@@ -61,10 +63,10 @@ RSpec.describe 'Get all items', type: :request do
 
       expect(response).to be_successful
 
-      items = JSON.parse(response.body, symbolize_names: true)
+      parsed = JSON.parse(response.body, symbolize_names: true)
 
-      expect(items[:data]).to be_an(Array)
-      expect(items[:data].count).to eq(0)
+      expect(parsed[:data]).to be_an(Array)
+      expect(parsed[:data].count).to eq(0)
     end
     it 'response doesnt include dependent data of the resource' do
       # NOT include dependent data of the resource (eg, if you’re
@@ -75,10 +77,10 @@ RSpec.describe 'Get all items', type: :request do
 
       expect(response).to be_successful
 
-      items = JSON.parse(response.body, symbolize_names: true)
+      parsed = JSON.parse(response.body, symbolize_names: true)
 
-      expect(items[:data]).to be_an(Array)
-      expect(items[:data].include?(Item.all.first.merchant)).to eq(false)
+      expect(parsed[:data]).to be_an(Array)
+      expect(parsed[:data].include?(Item.all.first.merchant)).to eq(false)
     end
   end
 end
