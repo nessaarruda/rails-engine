@@ -5,7 +5,7 @@ RSpec.describe 'Get all items', type: :request do
     it 'can return all items' do
       create_list(:item, 100)
 
-      get '/api/v1/items'
+      get '/api/v1/items?per_page=100'
 
       expect(response).to have_http_status(:success)
 

@@ -1,11 +1,7 @@
 class Api::V1::Items::ItemsController < ApplicationController
   def index
-    if params[:per_page]
-      item = Item.pagination(params[:per_page], params[:page])
-      render json: ItemSerializer.new(item)
-    else
-      render json: ItemSerializer.new(Item.all)
-    end
+    item = Item.pagination(params[:per_page], params[:page])
+    render json: ItemSerializer.new(item)
   end
 
   def show
@@ -13,22 +9,29 @@ class Api::V1::Items::ItemsController < ApplicationController
   end
 
   def create
-    render json: ItemSerializer.new(Item.create(item_params))
+    item = Item.create!(item_params)
+    render json: ItemSerializer.new(item), status: :created
   end
 
   def update
-    item = Item.find(params[:id])
-    item.update!(item_params)
-    render json: ItemSerializer.new(item)
+    begin
+      item = Item.find(params[:id])
+      item.update!(item_params)
+      render json: ItemSerializer.new(item), status: 202
+    rescue
+      render json: { "error" => {} }, status: 404
+    end
   end
 
   def destroy
-    Item.destroy(params[:id])
+    item = Item.find(params[:id])
+    item.destroy
+    head :no_content
   end
 
   private
 
   def item_params
-    params.permit(:id, :name, :description, :unit_price, :merchant_id)
+    params.permit(:name, :description, :unit_price, :merchant_id)
   end
 end
