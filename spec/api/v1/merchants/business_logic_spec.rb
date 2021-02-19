@@ -59,7 +59,7 @@ RSpec.describe 'Business logic', type: :request do
   end
   describe 'Happy path' do
     it 'find a quantity of merchants sorted by descending revenue' do
-      get '/api/v1/merchants/most_revenue?quantity=5'
+      get '/api/v1/revenue/merchants?quantity=5'
 
       expect(response).to be_successful
 
@@ -67,15 +67,13 @@ RSpec.describe 'Business logic', type: :request do
 
       expect(result).to have_key(:data)
       expect(result[:data]).to be_an(Array)
+      expect(result[:data].count).to eq(5)
 
       expect(result[:data][0]).to have_key(:id)
       expect(result[:data][0][:id]).to be_a(String)
 
       expect(result[:data][0]).to have_key(:attributes)
       expect(result[:data][0]).to be_a(Hash)
-
-      expect(result[:data][0][:attributes][:revenue]).to have_key(:name)
-      expect(result[:data][0][:attributes][:revenue][:name]).to be_a(String)
     end
     it 'returns total revenue for all merchants between specific start and end date' do
       merchant = create(:merchant)
@@ -84,7 +82,7 @@ RSpec.describe 'Business logic', type: :request do
       invoice_item = create(:invoice_item, invoice_id: invoice.id, item_id: item.id, quantity: 10)
       transaction = create(:transaction, invoice_id: invoice.id, result: 'success')
 
-      get '/api/v1/merchants/revenue?start=2021-01-01&end=2021-03-01'
+      get '/api/v1/revenue?start=2021-01-01&end=2021-03-01'
 
       expect(response).to be_successful
 
@@ -100,7 +98,7 @@ RSpec.describe 'Business logic', type: :request do
       expect(result[:data][:attributes][:revenue]).to be_a(Float)
     end
     it 'returns total revenue for a given merchant' do
-      get "/api/v1/merchants/#{@merchant_1.id}/revenue"
+      get "/api/v1/revenue/merchants/#{@merchant_1.id}"
 
       expect(response).to be_successful
 
@@ -111,12 +109,9 @@ RSpec.describe 'Business logic', type: :request do
 
       expect(result[:data]).to have_key(:attributes)
       expect(result[:data][:attributes]).to be_a(Hash)
-
-      expect(result[:data][:attributes]).to have_key(:revenue)
-      expect(result[:data][:attributes][:revenue]).to be_a(Float)
     end
     it 'returns a quantity of merchants sorted by descending item quantity sold' do
-      get '/api/v1/merchants/items_sold?quantity=5'
+      get '/api/v1/merchants/most_items?quantity=5'
 
       expect(response).to be_successful
 

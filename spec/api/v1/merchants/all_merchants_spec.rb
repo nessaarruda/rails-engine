@@ -37,6 +37,8 @@ RSpec.describe 'Get all merchants', type: :request do
       parsed = JSON.parse(response.body, symbolize_names: true)
 
       expect(parsed[:data].count).to eq(20)
+      expect(parsed[:data]).to be_an(Array)
+      expect(parsed[:data][0]).to be_a(Hash)
     end
     it 'returns array of data even if only one result is found' do
       # always return an array of data, even if one or zero resources are found

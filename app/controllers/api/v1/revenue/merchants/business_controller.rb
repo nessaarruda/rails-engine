@@ -1,4 +1,4 @@
-class Api::V1::Merchants::BusinessController < ApplicationController
+class Api::V1::Revenue::Merchants::BusinessController < ApplicationController
   def most_revenue
     merchants = Merchant.top_revenue(params[:quantity])
     render json: BusinessSerializer.new(merchants)
@@ -7,11 +7,6 @@ class Api::V1::Merchants::BusinessController < ApplicationController
   def total_revenue
     merchant = Merchant.find(params[:id]).revenue
     render json: BusinessSerializer.new(merchant)
-  end
-
-  def items_sold
-    merchants = Merchant.items(params[:quantity])
-    render json: MerchantSerializer.new(merchants)
   end
 
   def revenue_date_range

@@ -5,14 +5,19 @@ Rails.application.routes.draw do
     namespace :v1 do
 
       namespace :merchants do
+        get '/most_items', to: 'search#most_items'
         get '/', to: 'merchants#index'
-        get '/revenue', to: 'business#revenue_date_range'
-        get '/most_revenue', to: 'business#most_revenue'
         get '/find', to: 'search#find_merchant'
-        get '/items_sold', to: 'business#items_sold'
         get '/:id', to: 'merchants#show'
-        get '/:id/revenue', to: 'business#total_revenue'
         get '/:id/items', to: 'items#index'
+      end
+
+      namespace :revenue do
+        get '/', to: 'merchants/business#revenue_date_range'
+        namespace :merchants do
+          get '/', to: 'business#most_revenue'
+          get '/:id', to: 'business#total_revenue'
+        end
       end
 
       namespace :items do
@@ -21,8 +26,8 @@ Rails.application.routes.draw do
         post '/', to: 'items#create'
         get '/:id', to: 'items#show'
         delete '/:id', to: 'items#destroy'
-        patch '/:id', to: 'items#update'
-        get '/:id/merchants', to: 'merchants#show'
+        put '/:id', to: 'items#update'
+        get '/:id/merchant', to: 'merchants#show'
       end
 
       resources :merchants, only: :index

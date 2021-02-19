@@ -24,5 +24,12 @@ RSpec.describe 'Get all items for one merchants', type: :request do
       expect(parsed[:data][0][:attributes][:unit_price]).to be_a(Float)
       expect(items2.first.id).to_not eq(merchant1.id)
     end
+    it 'returns 404 error if items are not found' do
+      merchant = create(:merchant)
+
+      get "/api/v1/merchants/75/items"
+
+      expect(response).to have_http_status(:not_found)
+    end
   end
 end

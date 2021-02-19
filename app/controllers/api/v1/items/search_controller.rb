@@ -1,19 +1,7 @@
 class Api::V1::Items::SearchController < ApplicationController
   def find_items
-    render json: ItemSerializer.new(Item.find_all_items(attribute, value))
-  end
-
-  private
-
-  def find_params
-    params.permit(:name)
-  end
-
-  def attribute
-    find_params.keys[0]
-  end
-
-  def value
-    find_params[attribute]
+    item = Item.where('LOWER(name) LIKE ?', "%#{params[:name].downcase}%")
+    render json: ItemSerializer.new(item)
+    #return 0 if nothing found
   end
 end
