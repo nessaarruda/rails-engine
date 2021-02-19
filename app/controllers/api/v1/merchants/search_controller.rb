@@ -1,19 +1,11 @@
 class Api::V1::Merchants::SearchController < ApplicationController
   def find_merchant
-    render json: MerchantSerializer.new(Merchant.search_one(attribute, value))
+    merchant = Merchant.where('LOWER(name) LIKE ?', "%#{params[:name].downcase}%")
+    render json: MerchantSerializer.new(merchant.first)
   end
 
-  private
-
-  def find_params
-    params.permit(:name)
-  end
-
-  def attribute
-    find_params.keys[0]
-  end
-
-  def value
-    find_params[attribute]
+  def most_items
+    merchants = Merchant.items(params[:quantity])
+    render json: MerchantSerializer.new(merchants)
   end
 end

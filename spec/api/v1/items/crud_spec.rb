@@ -61,13 +61,29 @@ RSpec.describe 'Get one merchants', type: :request do
 
       headers = { 'CONTENT_TYPE' => 'application/json' }
 
-      patch "/api/v1/items/#{item.id}", headers: headers, params: JSON.generate(item_params)
+      put "/api/v1/items/#{item.id}", headers: headers, params: JSON.generate(item_params)
 
       updated_item = Item.find_by(id: item.id)
 
       expect(response).to be_successful
       expect(updated_item.name).to_not eq(original_name)
       expect(updated_item.name).to eq("Hey, I'm new here")
+    end
+    it 'return error if unable to update' do
+      merchant = create(:merchant)
+      item = create(:item, merchant_id: merchant.id)
+
+      original_name = Item.last.name
+      item_params = -2
+
+      headers = { 'CONTENT_TYPE' => 'application/json' }
+
+      put "/api/v1/items/75", headers: headers, params: JSON.generate(item_params)
+
+      updated_item = Item.find_by(id: item.id)
+
+      expect(response.status).to eq(404)
+      expect(updated_item.name).to eq(original_name)
     end
     it 'can delete an item' do
       merchant = create(:merchant)
@@ -85,7 +101,7 @@ RSpec.describe 'Get one merchants', type: :request do
       merchant = create(:merchant)
       item = create(:item, merchant_id: merchant.id)
 
-      get "/api/v1/items/#{item.id}/merchants"
+      get "/api/v1/items/#{item.id}/merchant"
 
       expect(response).to be_successful
 

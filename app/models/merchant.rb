@@ -15,11 +15,11 @@ class Merchant < ApplicationRecord
 
   def self.top_revenue(limit)
     joins(invoices: [:invoice_items, :transactions])
-      .where(transactions: { result: 'success' }, invoices: { status: 'shipped' })
-      .select('merchants.*, sum(invoice_items.quantity * invoice_items.unit_price) AS total_revenue')
-      .group(:id)
-      .order('total_revenue DESC')
-      .limit(limit)
+    .where(transactions: { result: 'success' }, invoices: { status: 'shipped' })
+    .select('merchants.*, sum(invoice_items.quantity * invoice_items.unit_price) AS total_revenue')
+    .group(:id)
+    .order('total_revenue DESC')
+    .limit(limit)
   end
 
   def revenue
@@ -42,9 +42,5 @@ class Merchant < ApplicationRecord
       .where(transactions: { result: 'success' }, invoices: { status: 'shipped' })
       .where(invoices: { created_at: start_date..end_date })
       .sum('invoice_items.unit_price * invoice_items.quantity')
-  end
-
-  def self.search_one(attribute, value)
-    Merchant.find_by("LOWER(#{attribute}) LIKE LOWER('%#{value}%')")
   end
 end
